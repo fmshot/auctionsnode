@@ -22,7 +22,7 @@ var auctionuserController = require('./controllers/auctionuserController.js');
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-  extended: falses 
+  extended: false
 }));
 app.use(cors({
   origin: 'http://localhost:4200'
@@ -41,7 +41,7 @@ const pusher = new Pusher({
   key: 'ee883b757f50aa4ab7b0',
   secret: '7c379689ae019bc3ccfa',
   cluster: 'us2',
-  encrypted: false
+  encrypted: true
 });
 
 
