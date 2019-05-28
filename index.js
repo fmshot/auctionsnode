@@ -22,7 +22,7 @@ var auctionuserController = require('./controllers/auctionuserController.js');
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-  extended: false
+  extended: falses 
 }));
 app.use(cors({
   origin: 'http://localhost:4200'
