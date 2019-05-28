@@ -6,7 +6,9 @@ const cors = require('cors');
 require('dotenv').config();
 const shortId = require('shortid');
 
-const { mongoose } = require('./db.js');
+const {
+  mongoose
+} = require('./db.js');
 var registrationController = require('./controllers/registrationController.js');
 var adminproductController = require('./controllers/adminproductController.js');
 var currentonlineuserController = require('./controllers/currentonlineuserController.js');
@@ -19,8 +21,12 @@ var auctionuserController = require('./controllers/auctionuserController.js');
 
 var app = express();
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors({origin: 'http://localhost:4200'}));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
+app.use(cors({
+  origin: 'http://localhost:4200'
+}));
 
 // const pusher = new Pusher({
 //     appId: process.env.Pusher_App_ID,
@@ -35,34 +41,34 @@ const pusher = new Pusher({
   key: 'ee883b757f50aa4ab7b0',
   secret: '7c379689ae019bc3ccfa',
   cluster: 'us2',
-  encrypted: true
+  encrypted: false
 });
 
 
 app.post('/message', async (req, res) => {
-    // simulate actual db save with id and createdAt added
-    const chat = {
-      ...req.body,
-      id: shortId.generate(),
-      createdAt: new Date().toISOString()
-    } 
-    // trigger this update to our pushers listeners
-    // pusher.trigger('chat-group', 'chat', chat)
-    res.send(chat)
-  });
+  // simulate actual db save with id and createdAt added
+  const chat = {
+    ...req.body,
+    id: shortId.generate(),
+    createdAt: new Date().toISOString()
+  }
+  // trigger this update to our pushers listeners
+  // pusher.trigger('chat-group', 'chat', chat)
+  res.send(chat)
+});
 
-  app.post('/join', (req, res) => {
-    const chat = {
-      ...req.body,
-      id: shortId.generate(),
-      type: 'joined',
-      createdAt: new Date().toISOString()
-    }
-    // trigger this update to our pushers listeners
-    // pusher.trigger('my-channel', 'my-event', {"message": "hello world"});
-    pusher.trigger('chat-group', 'chat', chat)
-    res.send(chat)
-  });
+app.post('/join', (req, res) => {
+  const chat = {
+    ...req.body,
+    id: shortId.generate(),
+    type: 'joined',
+    createdAt: new Date().toISOString()
+  }
+  // trigger this update to our pushers listeners
+  // pusher.trigger('my-channel', 'my-event', {"message": "hello world"});
+  pusher.trigger('chat-group', 'chat', chat)
+  res.send(chat)
+});
 
 
 
@@ -76,5 +82,3 @@ app.use('/bids', bidController);
 app.use('/auctions', auctionController);
 app.use('/auctionusers', auctionuserController);
 // app.use('/aucttimes', aucttimeController);
-
-
